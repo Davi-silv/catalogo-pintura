@@ -10,6 +10,8 @@ type Props = {
   meta?: Omit<CtaMeta, "attribution">;
   className?: string;
   variant?: "primary" | "secondary" | "ghost" | "light";
+  compact?: boolean;
+  fullWidth?: boolean;
 };
 
 const variantClass: Record<NonNullable<Props["variant"]>, string> = {
@@ -28,8 +30,11 @@ export function WhatsAppCta({
   meta,
   className = "",
   variant = "primary",
+  compact = false,
+  fullWidth = false,
 }: Props) {
   const config = CTA_MAP[context];
+  const label = compact ? "WhatsApp" : config.label;
 
   function handleClick() {
     const attribution = getAttribution();
@@ -50,10 +55,12 @@ export function WhatsAppCta({
     <button
       type="button"
       onClick={handleClick}
-      className={`inline-flex items-center justify-center gap-2 rounded-md px-6 py-3.5 text-sm font-semibold tracking-wide transition duration-300 ${variantClass[variant]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-semibold tracking-wide transition duration-300 sm:px-6 sm:py-3.5 ${
+        fullWidth ? "w-full sm:w-auto" : ""
+      } whitespace-normal text-center leading-snug ${variantClass[variant]} ${className}`}
     >
       <WhatsAppIcon />
-      {config.label}
+      <span>{label}</span>
     </button>
   );
 }

@@ -9,6 +9,8 @@
   --accent-hover: #0d9488;
   --accent-ink: #f4fffc;
   --line: rgba(15, 20, 24, 0.12);
+  --page-x: clamp(1rem, 4vw, 1.5rem);
+  --header-h: 4.25rem;
   --hero-veil: linear-gradient(
     105deg,
     rgba(8, 12, 16, 0.82) 0%,
@@ -24,51 +26,88 @@
   --font-display: var(--font-display);
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
+  margin: 0;
+  overflow-x: hidden;
   background:
     radial-gradient(ellipse 80% 50% at 10% -10%, rgba(15, 118, 110, 0.08), transparent 50%),
     radial-gradient(ellipse 60% 40% at 100% 0%, rgba(15, 20, 24, 0.05), transparent 45%),
     var(--bg);
   color: var(--ink);
   font-family: var(--font-body), "Segoe UI", sans-serif;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
 }
 
 .font-display {
   font-family: var(--font-display), Georgia, "Times New Roman", serif;
+  overflow-wrap: anywhere;
+}
+
+.page-x {
+  padding-inline: var(--page-x);
 }
 
 .section-pad {
-  padding-block: clamp(4.75rem, 11vw, 8rem);
+  padding-block: clamp(3.5rem, 9vw, 8rem);
 }
 
 .section-kicker {
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--accent);
   font-weight: 600;
 }
 
+@media (min-width: 640px) {
+  .section-kicker {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+  }
+}
+
 .section-title {
   margin-top: 0.85rem;
-  max-width: 16ch;
+  max-width: min(16ch, 100%);
   font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(2.15rem, 4.4vw, 3.35rem);
-  line-height: 1.05;
+  font-size: clamp(1.85rem, 6.5vw, 3.35rem);
+  line-height: 1.08;
   letter-spacing: -0.02em;
   color: var(--ink);
+  overflow-wrap: break-word;
 }
 
 .section-copy {
-  margin-top: 1rem;
+  margin-top: 0.9rem;
   max-width: 36rem;
-  font-size: 1.02rem;
+  font-size: clamp(0.95rem, 2.6vw, 1.02rem);
   line-height: 1.7;
   color: var(--muted);
+}
+
+.modal-sheet {
+  max-height: min(92dvh, 920px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 @keyframes heroReveal {
@@ -138,5 +177,16 @@ body {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+}
+
+@media (max-width: 639px) {
+  :root {
+    --hero-veil: linear-gradient(
+      180deg,
+      rgba(8, 12, 16, 0.35) 0%,
+      rgba(8, 12, 16, 0.55) 40%,
+      rgba(8, 12, 16, 0.88) 100%
+    );
   }
 }

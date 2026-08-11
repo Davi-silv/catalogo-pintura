@@ -16,7 +16,7 @@ export function VideosSection() {
 
   return (
     <section id="detalhes" className="section-pad bg-[var(--surface)]">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="page-x mx-auto max-w-6xl">
         <div className="max-w-2xl">
           <p className="section-kicker">Nos detalhes</p>
           <h2 className="section-title">O que faz a pintura profissional</h2>
@@ -26,7 +26,7 @@ export function VideosSection() {
           </p>
         </div>
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-4 sm:mt-14 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
           {craftDetails.map((detail, index) => (
             <article
               key={detail.id}
@@ -48,8 +48,10 @@ export function VideosSection() {
                   </span>
                 ) : null}
               </div>
-              <div className="p-5">
-                <h3 className="font-display text-2xl text-[var(--ink)]">{detail.title}</h3>
+              <div className="p-4 sm:p-5">
+                <h3 className="font-display text-xl text-[var(--ink)] sm:text-2xl">
+                  {detail.title}
+                </h3>
                 <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
                   {detail.description}
                 </p>
@@ -58,7 +60,8 @@ export function VideosSection() {
                     context="video"
                     meta={{ videoTitle: detail.title, projectId: detail.id }}
                     variant="ghost"
-                    className="!px-4 !py-2 text-xs"
+                    fullWidth
+                    className="!px-4 !py-2.5 text-xs sm:!w-auto"
                   />
                 </div>
               </div>
@@ -69,13 +72,13 @@ export function VideosSection() {
 
       {active ? (
         <div
-          className="fixed inset-0 z-50 flex items-end justify-center bg-black/75 p-4 backdrop-blur-sm md:items-center"
+          className="fixed inset-0 z-50 flex items-end justify-center bg-black/75 p-0 backdrop-blur-sm sm:items-center sm:p-4"
           onClick={() => setActive(null)}
           role="dialog"
           aria-modal
         >
           <div
-            className="w-full max-w-xl overflow-hidden bg-[var(--surface)] shadow-2xl"
+            className="modal-sheet w-full max-w-xl overflow-hidden rounded-t-2xl bg-[var(--surface)] shadow-2xl sm:rounded-none"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="relative aspect-video bg-black">
@@ -98,19 +101,20 @@ export function VideosSection() {
                 <Image src={active.image} alt={active.title} fill className="object-cover" />
               )}
             </div>
-            <div className="p-6 md:p-8">
-              <h3 className="font-display text-3xl text-[var(--ink)]">{active.title}</h3>
+            <div className="p-5 sm:p-6 md:p-8">
+              <h3 className="font-display text-2xl text-[var(--ink)] sm:text-3xl">{active.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
                 {active.description}
               </p>
-              <div className="mt-7 flex flex-wrap gap-3">
+              <div className="mt-6 flex flex-col gap-3 sm:mt-7 sm:flex-row sm:flex-wrap">
                 <WhatsAppCta
                   context="video"
                   meta={{ videoTitle: active.title, projectId: active.id }}
+                  fullWidth
                 />
                 <button
                   type="button"
-                  className="px-4 py-3 text-sm text-[var(--muted)] underline-offset-4 hover:underline"
+                  className="min-h-11 px-4 py-3 text-sm text-[var(--muted)] underline-offset-4 hover:underline"
                   onClick={() => setActive(null)}
                 >
                   Fechar

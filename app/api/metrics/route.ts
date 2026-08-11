@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 function unauthorized() {
   return NextResponse.json({ error: "Acesso não autorizado" }, { status: 401 });
 }
@@ -19,6 +22,13 @@ function isAuthorized(request: Request): boolean {
 
 export async function GET(request: Request) {
   if (!isAuthorized(request)) return unauthorized();
+
+  if (!process.env.DATABASE_URL) {
+    return NextResponse.json(
+      { error: "DATABASE_URL não configurada" },
+      { status: 503 },
+    );
+  }
 
   const events = await prisma.commercialEvent.findMany({
     orderBy: { timestamp: "desc" },

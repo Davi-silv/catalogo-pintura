@@ -15,8 +15,12 @@ export function FloatingWhatsApp() {
   if (!visible) return null;
 
   return (
-    <div className="float-cta fixed bottom-5 right-5 z-50 md:bottom-7 md:right-7">
-      <WhatsAppCta context="final" className="shadow-lg shadow-teal-900/25" />
+    <div className="float-cta fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-50 sm:bottom-7 sm:right-7">
+      <WhatsAppCta
+        context="final"
+        compact
+        className="shadow-lg shadow-teal-900/25 !px-4 !py-3 text-xs sm:!px-5 sm:!py-3.5 sm:text-sm"
+      />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "CommercialEvent" (
-    "id" TEXT NOT NULL PRIMARY KEY,
+    "id" TEXT NOT NULL,
     "event" TEXT NOT NULL,
     "page" TEXT NOT NULL,
     "projectId" TEXT,
@@ -14,8 +14,10 @@ CREATE TABLE "CommercialEvent" (
     "utmTerm" TEXT,
     "device" TEXT NOT NULL,
     "sessionId" TEXT NOT NULL,
-    "timestamp" DATETIME NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    "timestamp" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "CommercialEvent_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex

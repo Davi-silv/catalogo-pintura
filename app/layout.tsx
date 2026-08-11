@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Newsreader, Manrope } from "next/font/google";
 import { AnalyticsProvider } from "@/components/tracking/AnalyticsProvider";
 import "./globals.css";
@@ -23,10 +23,17 @@ export const metadata: Metadata = {
     "Pintura residencial e comercial com acabamento profissional. Solicite orçamento pelo WhatsApp.",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#0f766e",
+};
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="pt-BR" className={`${display.variable} ${body.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col bg-[var(--bg)] text-[var(--ink)]">
+      <body className="flex min-h-full flex-col overflow-x-hidden bg-[var(--bg)] text-[var(--ink)]">
         <AnalyticsProvider>{children}</AnalyticsProvider>
       </body>
     </html>
