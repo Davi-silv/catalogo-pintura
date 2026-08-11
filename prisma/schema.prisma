@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model CommercialEvent {
+  id          String   @id @default(cuid())
+  event       String
+  page        String
+  projectId   String?
+  serviceId   String?
+  origin      String?
+  campaign    String?
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  utmContent  String?
+  utmTerm     String?
+  device      String
+  sessionId   String
+  timestamp   DateTime
+  createdAt   DateTime @default(now())
+
+  @@index([event])
+  @@index([origin])
+  @@index([campaign])
+  @@index([timestamp])
+  @@index([sessionId])
+}

@@ -1,0 +1,37 @@
+{
+  "cSpell.language": "en,pt,pt-BR",
+  "cSpell.enabled": true,
+  "cSpell.diagnosticLevel": "Hint",
+  "cSpell.allowCompoundWords": true,
+  "cSpell.enableFiletypes": [
+    "typescript",
+    "typescriptreact",
+    "javascript",
+    "javascriptreact",
+    "markdown",
+    "json",
+    "css"
+  ],
+  "cSpell.ignorePaths": [
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/.agents/**",
+    "**/.claude/**",
+    "**/.windsurf/**",
+    "**/public/media/**",
+    "**/package-lock.json",
+    "**/skills-lock.json"
+  ],
+  "files.watcherExclude": {
+    "**/.agents/**": true,
+    "**/.claude/**": true,
+    "**/.windsurf/**": true
+  },
+  "search.exclude": {
+    "**/.agents": true,
+    "**/.claude": true,
+    "**/.windsurf": true,
+    "**/node_modules": true,
+    "**/.next": true
+  }
+}

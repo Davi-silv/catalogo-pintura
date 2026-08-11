@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Robson Barbosa — Catálogo comercial de pintura
 
-## Getting Started
+Site pensado para gerar orçamentos: atrair → envolver → gerar confiança → WhatsApp.
 
-First, run the development server:
+## Como rodar
 
 ```bash
+npm install
+npx prisma migrate dev
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3010](http://localhost:3010) *(porta 3010 para não conflitar com outros projetos)*.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Variáveis de ambiente (`.env`)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variável | Função |
+|---|---|
+| `NEXT_PUBLIC_BRAND_NAME` | Nome da marca (Robson Barbosa) |
+| `NEXT_PUBLIC_WHATSAPP` | WhatsApp com DDI (`5521991060924`) |
+| `NEXT_PUBLIC_GA4_ID` | ID do Google Analytics 4 (opcional) |
+| `ADMIN_METRICS_TOKEN` | Senha do painel de métricas |
+| `DATABASE_URL` | Banco SQLite (`file:./dev.db`) |
 
-## Learn More
+## Painel de métricas
 
-To learn more about Next.js, take a look at the following resources:
+Acesse: `/admin/metrics?token=SEU_TOKEN`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Mostra visitantes, projetos vistos, vídeos, antes/depois, WhatsApp, orçamentos, taxa de conversão, origem e campanha.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Jornada do site
 
-## Deploy on Vercel
+1. **Atenção** — Hero com vídeo + “Solicitar orçamento”
+2. **Interesse** — Projetos
+3. **Desejo** — Antes e depois
+4. **Confiança** — Processo, diferenciais e avaliações
+5. **Intenção** — Botões no contexto do que a pessoa viu
+6. **Ação** — Contato pelo WhatsApp
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Rastreamento
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Cada ação importante vira um evento (página, projeto, serviço, vídeo, antes/depois, WhatsApp, orçamento, contato).
+
+Os dados vão para:
+- **Google Analytics 4** (se o ID estiver configurado)
+- **API própria** (`POST /api/events`) gravada no SQLite
+
+Parâmetros de campanha preservados: `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`.

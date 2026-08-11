@@ -1,26 +1,142 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #e9eef2;
+  --surface: #f5f8fa;
+  --ink: #0f1418;
+  --muted: #5b6770;
+  --accent: #0f766e;
+  --accent-hover: #0d9488;
+  --accent-ink: #f4fffc;
+  --line: rgba(15, 20, 24, 0.12);
+  --hero-veil: linear-gradient(
+    105deg,
+    rgba(8, 12, 16, 0.82) 0%,
+    rgba(8, 12, 16, 0.45) 48%,
+    rgba(8, 12, 16, 0.18) 100%
+  );
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(15, 118, 110, 0.08), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(15, 20, 24, 0.05), transparent 45%),
+    var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body), "Segoe UI", sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+}
+
+.section-pad {
+  padding-block: clamp(4.75rem, 11vw, 8rem);
+}
+
+.section-kicker {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.section-title {
+  margin-top: 0.85rem;
+  max-width: 16ch;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.15rem, 4.4vw, 3.35rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.section-copy {
+  margin-top: 1rem;
+  max-width: 36rem;
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+@keyframes heroReveal {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-reveal {
+  opacity: 0;
+  animation: heroReveal 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-up {
+  animation: revealUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes slowZoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.06);
+  }
+}
+
+.hero-media {
+  animation: slowZoom 18s ease-out forwards;
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.float-cta {
+  animation: floatIn 0.6s ease 0.8s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-reveal,
+  .reveal-up,
+  .hero-media,
+  .float-cta {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
