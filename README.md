@@ -32,16 +32,18 @@ Abra [http://localhost:3010](http://localhost:3010).
 2. Crie um banco Postgres gratuito:
    - [Neon](https://neon.tech) (recomendado), ou
    - Storage → Postgres na própria Vercel
-3. Em **Project → Settings → Environment Variables**, configure:
-   - `DATABASE_URL` (connection string com `sslmode=require`; use a URL **pooled** se disponível)
+3. Em **Project → Settings → Environment Variables**, configure (valores **não podem ficar em branco**):
+   - `DATABASE_URL` → cole a connection string completa do Neon/Vercel Postgres  
+     Ex.: `postgresql://USER:PASSWORD@HOST/DB?sslmode=require`  
+     Preferir a URL **pooled** (com `-pooler` no host, se o Neon oferecer).
    - `NEXT_PUBLIC_BRAND_NAME=Robson Barbosa`
    - `NEXT_PUBLIC_WHATSAPP=5521991060924`
-   - `ADMIN_METRICS_TOKEN=` (senha forte)
+   - `ADMIN_METRICS_TOKEN=` (senha forte, sem deixar vazio)
    - `NEXT_PUBLIC_GA4_ID=` (opcional)
-4. Faça o deploy. O `vercel.json` já roda:
-   - `prisma generate`
-   - `prisma migrate deploy`
-   - `next build`
+4. Marque as variáveis para **Production**, **Preview** e **Development**.
+5. Faça **Redeploy** do projeto.
+
+Se o build acusar `DATABASE_URL` vazia: a variável existe, mas o valor está em branco. Edite e cole a URL de novo.
 
 ### Observações importantes
 
