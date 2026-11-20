@@ -1,76 +1,94 @@
-# Robson Barbosa — Catálogo comercial de pintura
+# Catálogo de Pintura — Robson Barbosa
 
-Site pensado para gerar orçamentos: atrair → envolver → gerar confiança → WhatsApp.
+<div align="center">
 
-Compatível com **Vercel** (Next.js + PostgreSQL).
+### Site comercial com captação de orçamentos e análise de conversões
 
-## Variáveis de ambiente
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=nextdotjs)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-2D3748?logo=prisma&logoColor=white)](https://www.prisma.io/)
 
-| Variável | Função |
-|---|---|
-| `DATABASE_URL` | PostgreSQL (Neon, Vercel Postgres ou Docker local) |
-| `NEXT_PUBLIC_BRAND_NAME` | Nome da marca |
-| `NEXT_PUBLIC_WHATSAPP` | WhatsApp com DDI (`5521991060924`) |
-| `NEXT_PUBLIC_GA4_ID` | Google Analytics 4 (opcional) |
-| `ADMIN_METRICS_TOKEN` | Token do painel `/admin/metrics` |
+**[Código no GitHub](https://github.com/Davi-silv/catalogo-pintura)** · **[Portfólio do desenvolvedor](https://portifolio-future.vercel.app/)**
 
-## Local
+</div>
+
+## Sobre o projeto
+
+Site comercial voltado à **apresentação de serviços de pintura e geração de pedidos de orçamento**. A experiência foi estruturada para apresentar projetos, antes e depois, informações de serviços e chamadas para contato pelo WhatsApp.
+
+Além da interface, o repositório documenta **rastreamento de eventos**, **API própria** e armazenamento em **PostgreSQL**, recursos relevantes para analisar a jornada de conversão.
+
+## Funcionalidades documentadas
+
+| Área | Recursos |
+| --- | --- |
+| Vitrine comercial | Apresentação de serviços, projetos e comparações antes/depois |
+| Captação | Chamadas para solicitar orçamento pelo WhatsApp |
+| Métricas | Painel em `/admin/metrics` protegido por token configurado |
+| Eventos | Rastreamento de visualizações e interações, incluindo orçamento e contato |
+| Marketing | Suporte a parâmetros UTM e integração opcional com GA4 |
+| Persistência | API `POST /api/events` e banco PostgreSQL via Prisma |
+
+## Tecnologias e arquitetura
+
+- **Interface:** Next.js 16, React 19, TypeScript e Tailwind CSS 4.
+- **Banco de dados:** PostgreSQL com Prisma.
+- **Validação:** Zod.
+- **Deploy:** build para ambiente Node.js, com orientação para hospedagem na Vercel.
+
+O projeto separa experiência pública, rotas de API e persistência de eventos. O uso do PostgreSQL é importante em hospedagens com armazenamento temporário, como funções serverless.
+
+## Executar localmente
+
+**Pré-requisitos:** Node.js 20+, npm e Docker para a opção de PostgreSQL local.
 
 ```bash
+git clone https://github.com/Davi-silv/catalogo-pintura.git
+cd catalogo-pintura
 cp .env.example .env
 npm install
-npm run db:up          # sobe Postgres no Docker
-npm run db:deploy      # aplica migrations
+npm run db:up
+npm run db:deploy
 npm run dev
 ```
 
-Abra [http://localhost:3010](http://localhost:3010).
+Acesse **http://localhost:3010**. Configure as variáveis no arquivo `.env` antes de executar as migrações.
 
-## Deploy na Vercel
+### Configurações
 
-1. Importe o repositório no [Vercel](https://vercel.com/new).
-2. Crie um banco Postgres gratuito:
-   - [Neon](https://neon.tech) (recomendado), ou
-   - Storage → Postgres na própria Vercel
-3. Em **Project → Settings → Environment Variables**, configure (valores **não podem ficar em branco**):
-   - `DATABASE_URL` → cole a connection string completa do Neon/Vercel Postgres  
-     Ex.: `postgresql://USER:PASSWORD@HOST/DB?sslmode=require`  
-     Preferir a URL **pooled** (com `-pooler` no host, se o Neon oferecer).
-   - `NEXT_PUBLIC_BRAND_NAME=Robson Barbosa`
-   - `NEXT_PUBLIC_WHATSAPP=5521991060924`
-   - `ADMIN_METRICS_TOKEN=` (senha forte, sem deixar vazio)
-   - `NEXT_PUBLIC_GA4_ID=` (opcional)
-4. Marque as variáveis para **Production**, **Preview** e **Development**.
-5. Faça **Redeploy** do projeto.
+| Variável | Finalidade |
+| --- | --- |
+| `DATABASE_URL` | Conexão PostgreSQL |
+| `NEXT_PUBLIC_BRAND_NAME` | Nome exibido da marca |
+| `NEXT_PUBLIC_WHATSAPP` | Contato com DDI |
+| `NEXT_PUBLIC_GA4_ID` | Integração opcional com Google Analytics |
+| `ADMIN_METRICS_TOKEN` | Acesso ao painel de métricas |
 
-Se o build acusar `DATABASE_URL` vazia: a variável existe, mas o valor está em branco. Edite e cole a URL de novo.
+**Nunca publique tokens administrativos ou credenciais de banco.** Variáveis `NEXT_PUBLIC_` são destinadas ao navegador e não devem conter segredos.
 
-### Observações importantes
+### Comandos
 
-- **Não use SQLite na Vercel** (filesystem efêmero). Este projeto usa PostgreSQL.
-- As migrations rodam no build (`prisma migrate deploy`).
-- API routes usam runtime `nodejs` (exigido pelo Prisma).
-- Imagens remotas do Unsplash já estão liberadas no `next.config.ts`.
+| Comando | Função |
+| --- | --- |
+| `npm run dev` | Servidor de desenvolvimento |
+| `npm run build` | Build e preparação do Prisma |
+| `npm run lint` | Verificação com ESLint |
+| `npm run db:up` | Inicializa PostgreSQL via Docker |
+| `npm run db:deploy` | Aplica migrações existentes |
+| `npm run db:migrate` | Desenvolvimento de migrações |
 
-## Painel de métricas
+## Implantação
 
-`/admin/metrics?token=SEU_TOKEN`
+A documentação original orienta publicação na **Vercel** com banco PostgreSQL externo (por exemplo, Neon). Em produção, configure `DATABASE_URL`, `ADMIN_METRICS_TOKEN` e demais variáveis do ambiente antes do deploy. Verifique as migrações e os endpoints em ambiente seguro.
 
-## Jornada do site
+## Autoria
 
-1. **Atenção** — Hero + “Solicitar orçamento”
-2. **Interesse** — Projetos
-3. **Desejo** — Antes e depois
-4. **Confiança** — Processo e avaliações
-5. **Intenção** — CTAs contextuais
-6. **Ação** — WhatsApp
+Desenvolvido por **Davi Barbosa da Silva**, fundador da **Evolutiva Tech**.
 
-## Rastreamento
+[GitHub](https://github.com/Davi-silv) · [Portfólio](https://portifolio-future.vercel.app/) · [LinkedIn](https://www.linkedin.com/in/davi-barbosa-silva/)
 
-Eventos: página, projeto, serviço, vídeo, antes/depois, WhatsApp, orçamento, contato.
+---
 
-Destinos:
-- GA4 (se configurado)
-- API própria (`POST /api/events`) → PostgreSQL
-
-UTMs preservados: `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`.
+<sub>Projeto de desenvolvimento web, mensuração de eventos e integração com banco de dados.</sub>
